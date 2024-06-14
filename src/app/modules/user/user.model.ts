@@ -58,8 +58,8 @@ const userSchema = new Schema<TUser,UserModel>(
   
 
   
-  userSchema.statics.isUserExists = async function (email: string) {
-    return await User.findOne({email:email});
-  };
+//   userSchema.statics.isUserExists = async function (email: string) {
+//     return await User.findOne({email:email});
+//   };
 
   export const User = model<TUser,UserModel>('User', userSchema);

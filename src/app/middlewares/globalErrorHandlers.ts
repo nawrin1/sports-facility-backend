@@ -9,6 +9,9 @@ import config from '../config';
 import { TErrorMessages } from '../interface/error';
 import AppError from '../error/AppError';
 import handleZodError from '../error/handleZodError';
+import handleDuplicateError from '../error/handleDuplicateError';
+import handleValidationError from '../error/handleValidationError';
+import handleCastError from '../error/handleCastError';
 
 
 const globalErrorHandler:ErrorRequestHandler = (
@@ -27,30 +30,46 @@ const globalErrorHandler:ErrorRequestHandler = (
   ];
 
 
- if(err instanceof ZodError){
-  const updatedError=handleZodError(err)
-  statusCode = updatedError?.statusCode;
-  message = updatedError?.message;
-  errorMessages = updatedError?.errorMessages;
-
- }else if (err instanceof AppError) {
-  statusCode = err?.statusCode;
-  message = err.message;
-  errorMessages = [
-    {
-      path: '',
-      message: err?.message,
-    },
-  ];
-} else if (err instanceof Error) {
-  message = err.message;
-  errorMessages = [
-    {
-      path: '',
-      message: err?.message,
-    },
-  ];
-}
+  if(err instanceof ZodError){
+    const updatedError=handleZodError(err)
+    statusCode = updatedError?.statusCode;
+    message = updatedError?.message;
+    errorMessages = updatedError?.errorMessages;
+  
+   }else if (err?.code === 11000) {
+    const updatedError = handleDuplicateError(err);
+    statusCode = updatedError?.statusCode;
+    message = updatedError?.message;
+    errorMessages = updatedError?.errorMessages;
+  }else if (err?.name === 'CastError') {
+    const updatedError = handleCastError(err);
+    statusCode = updatedError?.statusCode;
+    message = updatedError?.message;
+    errorMessages = updatedError?.errorMessages;
+   } else if (err?.name === 'ValidationError') {
+    const updatedError = handleValidationError(err);
+    statusCode = updatedError?.statusCode;
+    message = updatedError?.message;
+    errorMessages = updatedError?.errorMessages;
+   }else if (err instanceof AppError) {
+    statusCode = err?.statusCode;
+    message = err.message;
+    errorMessages = [
+      {
+        path: '',
+        message: err?.message,
+      },
+    ];
+  } else if (err instanceof Error) {
+    message = err.message;
+    errorMessages = [
+      {
+        path: '',
+        message: err?.message,
+      },
+    ];
+  }
+  
 
   return res.status(statusCode).json({
     success: false,
