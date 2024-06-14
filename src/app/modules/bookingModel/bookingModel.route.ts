@@ -17,6 +17,13 @@ router.post(
     validateRequest(bookingValidationSchema),
     BookingControllers.createBooking,
   );
+router.get(
+    '/',
+    auth(USER_ROLE.admin),
+    
+   
+    BookingControllers.getAllBooking,
+  );
 
 
 
