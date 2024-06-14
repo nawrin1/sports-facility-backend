@@ -70,14 +70,24 @@ const globalErrorHandler:ErrorRequestHandler = (
     ];
   }
   
+  if (err.message=="You have no access to this route"){
+    return res.status(statusCode).json({
+        success: false,
+        statusCode:statusCode,
+        message,
+        
+    
+      });
+  }
 
-  return res.status(statusCode).json({
+  else{
+    return res.status(statusCode).json({
     success: false,
     message,
     errorMessages,
     stack: config.NODE_ENV === 'development' ? err?.stack : null,
 
-  });
+  })}
 };
 
 export default globalErrorHandler;

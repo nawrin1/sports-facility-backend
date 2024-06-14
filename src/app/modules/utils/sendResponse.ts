@@ -17,11 +17,13 @@ const sendResponse = <T>(res: Response, data: TResponse<T>) => {
       };
     
       // Check if there is a token and add it to the response object if present
+
       if (data?.token) {
         responseObject.token = data?.token;
       }
     
       res.status(data?.statusCode).json(responseObject);
+      
 
     }
 
