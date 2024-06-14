@@ -20,7 +20,7 @@ const userSchema = new Schema<TUser,UserModel>(
       password: {
         type: String,
         required: true,
-        select:0
+        
       },
       phone:{
         type:String,
@@ -57,9 +57,18 @@ const userSchema = new Schema<TUser,UserModel>(
   });
   
 
+  userSchema.statics.isPasswordMatched = async function (
+    plainPassword,
+    hashedPassword,
+  ) {
+    return await bcrypt.compare(plainPassword, hashedPassword);
+  };
+
+
   
-//   userSchema.statics.isUserExists = async function (email: string) {
-//     return await User.findOne({email:email});
-//   };
+  userSchema.statics.isUserExists = async function (email: string) {
+    
+    return (await User.findOne({email:email}));
+  };
 
   export const User = model<TUser,UserModel>('User', userSchema);

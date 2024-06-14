@@ -15,6 +15,12 @@ export interface UserModel extends Model<TUser> {
     
     // eslint-disable-next-line no-unused-vars
     isUserExists(email: string): Promise<TUser>;
+    isPasswordMatched(
+        // eslint-disable-next-line no-unused-vars
+        plainPassword: string,
+        // eslint-disable-next-line no-unused-vars
+        hashedPassword: string,
+      ): Promise<boolean>;
 
   }
   

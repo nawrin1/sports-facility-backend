@@ -2,6 +2,9 @@ import httpStatus from "http-status";
 import AppError from "../../error/AppError";
 import { TUser } from "./user.interface";
 import { User } from "./user.model";
+import { TLoginUser } from "./user.login.interface";
+import { createToken } from "./user.auth.utils";
+import config from "../../config";
 
 const createUserIntoDB = async (payload: TUser) => {
 
@@ -18,8 +21,43 @@ const createUserIntoDB = async (payload: TUser) => {
     return final;
   };
 
+  const loginUser = async (payload: TLoginUser) => {
+    const user = await User.isUserExists(payload.email);;
+  
+    if (!user) {
+      throw new AppError(httpStatus.NOT_FOUND, 'User is not found');
+    }
+//     console.log(user,"user")
+
+// console.log(payload.password,user.password)
+  
+    if (!(await User.isPasswordMatched(payload?.password, user?.password)))
+      throw new AppError(httpStatus.FORBIDDEN, 'Password do not matched');
+  
+  
+    const jwtPayload = {
+      user_email: user.email,
+      role: user.role,
+    };
+  
+    const accessToken = createToken(
+      jwtPayload,
+      config.jwt_access_secret as string,
+      config.jwt_access_expires as string,
+    );
+    const user1 = await User.findOne({email:payload.email}).select('-password -createdAt -updatedAt -__v');
+  
+    return {
+      accessToken,
+      user1
+     
+    };
+  };
+
+
   export const UserServices = {
     createUserIntoDB,
+    loginUser
     
   };
 
