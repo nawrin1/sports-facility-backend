@@ -16,7 +16,10 @@ const auth = (...requiredRoles: TUserRole[]) => {
    
 
     if (!token) {
-      throw new AppError(httpStatus.UNAUTHORIZED, 'You are not authorized!');
+        throw new AppError(
+            httpStatus.UNAUTHORIZED,
+            'You have no access to this route',
+          );
     }
 
     const decoded = jwt.verify(

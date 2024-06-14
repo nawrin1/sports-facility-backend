@@ -31,6 +31,13 @@ router.get(
    
     BookingControllers.getUserBooking,
   );
+router.delete(
+    '/:id',
+    auth(USER_ROLE.user),
+    
+   
+    BookingControllers.deleteBooking,
+  );
 
 
 

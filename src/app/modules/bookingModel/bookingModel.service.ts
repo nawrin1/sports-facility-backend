@@ -109,9 +109,30 @@ const getUserBookingFromDB = async (payload:JwtPayload) => {
         //   console.log(result,"resss")
         return result;
 };
+
+const deleteBookingFromDB = async (id: string) => {
+
+
+          const deletedBooking= await Booking.findByIdAndUpdate(
+             id ,
+            { isBooked: "canceled" },
+            { new: true,fields: '-createdAt -updatedAt -__v'},
+          ).populate({
+            path: 'facility',
+            select: '-createdAt -updatedAt -__v'
+          });
+      
+          if (!deletedBooking) {
+            throw new AppError(httpStatus.BAD_REQUEST, 'Failed to delete Booking');
+          }
+
+          return deletedBooking
+      };
+
    
 export const BookingServices={
     createBookingIntoDB,
     getAllBookingFromDB,
-    getUserBookingFromDB
+    getUserBookingFromDB,
+    deleteBookingFromDB
 }
