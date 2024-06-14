@@ -42,6 +42,12 @@ const facilitySchema = new Schema<TFacility,FacilityModel>(
     
     return (await Facility.findOne({name:name}));
   };
+  facilitySchema.statics.isFacilityExistsForDelete = async function (id:string) {
+    
+    return (await Facility.findById(id));
+  };
+
+
 
 
   export const Facility = model<TFacility,FacilityModel>('Facility',facilitySchema);

@@ -24,6 +24,12 @@ router.put(
     validateRequest(facilityValidationSchema),
     FacilityControllers.updateFacility,
   );
+router.delete(
+    '/:id',
+    auth(USER_ROLE.admin),
+    
+    FacilityControllers.deleteFacility,
+  );
 
 
 

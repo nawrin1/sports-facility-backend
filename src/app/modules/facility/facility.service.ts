@@ -23,16 +23,46 @@ const updateFacilityIntoDB = async (
         id: string,
         payload: Partial<TFacility>,
       ) => {
+
+
+        // if (!await Facility.isFacilityExistsForDelete(id)) {
+        //     throw new AppError(httpStatus.BAD_REQUEST,'Facility does not exists!');
+        //   }
+
         const result = await Facility.findOneAndUpdate({ _id: id }, payload, {
           new: true,
           fields: '-createdAt -updatedAt -__v'
         });
         return result;
+ };
+  
+const deleteFacilityFromDB = async (id: string) => {
+    // if (!await Facility.isFacilityExistsForDelete(id)) {
+    //     throw new AppError(httpStatus.BAD_REQUEST,'Facility does not exists!');
+    //   }
+
+
+          const deletedFacility= await Facility.findByIdAndUpdate(
+             id ,
+            { isDeleted: true },
+            { new: true,fields: '-createdAt -updatedAt -__v'},
+          );
+      
+          if (!deletedFacility) {
+            throw new AppError(httpStatus.BAD_REQUEST, 'Failed to delete Facility');
+          }
+
+          return deletedFacility
+      
+        
+      
+         
       };
       
 
 export const FacilityServices={
     createFacilityIntoDB,
-    updateFacilityIntoDB
+    updateFacilityIntoDB,
+    deleteFacilityFromDB
 }
     
