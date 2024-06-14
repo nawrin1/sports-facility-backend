@@ -18,7 +18,21 @@ const createFacilityIntoDB = async (payload: TFacility) => {
         return final;
       };
 
+
+const updateFacilityIntoDB = async (
+        id: string,
+        payload: Partial<TFacility>,
+      ) => {
+        const result = await Facility.findOneAndUpdate({ _id: id }, payload, {
+          new: true,
+          fields: '-createdAt -updatedAt -__v'
+        });
+        return result;
+      };
+      
+
 export const FacilityServices={
-    createFacilityIntoDB
+    createFacilityIntoDB,
+    updateFacilityIntoDB
 }
     

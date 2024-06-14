@@ -12,7 +12,7 @@ import AppError from '../error/AppError';
 const auth = (...requiredRoles: TUserRole[]) => {
   return catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     const token = req.headers.authorization?.split(' ')[1];
-    console.log(token,"token")
+    // console.log(token,"token")
    
 
     if (!token) {
@@ -24,7 +24,7 @@ const auth = (...requiredRoles: TUserRole[]) => {
       config.jwt_access_secret as string,
     ) as JwtPayload;
 
-    console.log(decoded)
+    // console.log(decoded)
 
     const { role, user_email } = decoded;
 

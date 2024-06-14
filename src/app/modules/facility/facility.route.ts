@@ -17,6 +17,13 @@ router.post(
     validateRequest(facilityValidationSchema),
     FacilityControllers.createFacility,
   );
+router.put(
+    '/:id',
+    auth(USER_ROLE.admin),
+    
+    validateRequest(facilityValidationSchema),
+    FacilityControllers.updateFacility,
+  );
 
 
 
