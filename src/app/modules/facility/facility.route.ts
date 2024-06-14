@@ -30,6 +30,11 @@ router.delete(
     
     FacilityControllers.deleteFacility,
   );
+router.get(
+    '/',
+
+    FacilityControllers.getAllFacility,
+  );
 
 
 

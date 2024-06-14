@@ -53,16 +53,18 @@ const deleteFacilityFromDB = async (id: string) => {
           }
 
           return deletedFacility
-      
-        
-      
-         
       };
+
+ const getAllFacilityFromDB = async () => {
+        const result = await Facility.find().select('-createdAt -updatedAt -__v');
+        return result;
+};
       
 
 export const FacilityServices={
     createFacilityIntoDB,
     updateFacilityIntoDB,
-    deleteFacilityFromDB
+    deleteFacilityFromDB,
+    getAllFacilityFromDB
 }
     
