@@ -85,8 +85,33 @@ const getAllBookingFromDB = async () => {
           .select('-createdAt -updatedAt -__v');
         return result;
 };
+
+const getUserBookingFromDB = async (payload:JwtPayload) => {
+    // console.log(payload,"userrrr")
+    const userId=await User.findOne({email:payload.user_email})
+    let userIdString=""
+    if (userId) {
+        
+        userIdString = userId._id.toString();
+
+    }
+
+
+
+        const result = await Booking.find({user:userIdString})
+          
+          .populate({
+            path: 'facility',
+            select: '-createdAt -updatedAt -__v'
+          })
+          .select('-createdAt -updatedAt -__v -password');
+
+        //   console.log(result,"resss")
+        return result;
+};
    
 export const BookingServices={
     createBookingIntoDB,
-    getAllBookingFromDB
+    getAllBookingFromDB,
+    getUserBookingFromDB
 }

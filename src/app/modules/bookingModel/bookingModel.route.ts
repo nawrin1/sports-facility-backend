@@ -24,6 +24,13 @@ router.get(
    
     BookingControllers.getAllBooking,
   );
+router.get(
+    '/user',
+    auth(USER_ROLE.user),
+    
+   
+    BookingControllers.getUserBooking,
+  );
 
 
 
