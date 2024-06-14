@@ -17,4 +17,9 @@ export type TBookSchedule = {
     endTime: string;
   };
 
+ export interface TimeSlot {
+    startTime: string;
+    endTime: string;
+  }
+
 export type TBookingConfirm= "confirmed"| "unconfirmed"|" canceled";

@@ -9,6 +9,7 @@ const createBooking = catchAsync(async (req, res) => {
   
   
     const result = await BookingServices.createBookingIntoDB(req.user,req.body);
+    
   
     sendResponse(res, {
       
@@ -57,11 +58,25 @@ const deleteBooking = catchAsync(async (req, res) => {
       data: result,
     });
   });
+const checkBooking = catchAsync(async (req, res) => {
+    const date=req.query?.date as string
+    const result = await BookingServices.checkBookingFromDB(date);
+    const responseObject: any = {
+        success: true,
+        statusCode: httpStatus.OK,
+        message: "Availability checked successfully",
+        data: result
+      };
+    return res.json(responseObject)
+  
+   
+  });
 
 
 export const BookingControllers={
     createBooking,
     getAllBooking,
     getUserBooking,
-    deleteBooking
+    deleteBooking,
+    checkBooking
 }

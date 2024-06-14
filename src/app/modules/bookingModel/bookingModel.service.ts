@@ -6,6 +6,8 @@ import { JwtPayload } from "jsonwebtoken";
 import { User } from "../user/user.model";
 import { Booking } from "./bookingModel.model";
 import { hasBookingTimeConflict } from "./bookingTimeConflict";
+import { parseISO, isValid } from 'date-fns';
+import { findAvailableSlots } from "./bookingAvailable";
 
 const  createBookingIntoDB = async (userData:JwtPayload,payload: TBooking) => {
     // console.log(payload,"from book")
@@ -128,11 +130,41 @@ const deleteBookingFromDB = async (id: string) => {
 
           return deletedBooking
       };
+const checkBookingFromDB = async (value: string|undefined) => {
+    let date;
+    if (value) {
+        date = parseISO(value);
+        if (!isValid(date)) {
+           throw new AppError(httpStatus.BAD_REQUEST,'Invalid date format. Please use YYYY-MM-DD')
+         
+        }
+      } else {
+        date = new Date();
+      }
+
+    //   console.log(date,"from check")
+      const bookingValue = await Booking.find({
+        date: value
+        
+      }).select('startTime endTime -_id');
+      console.log(bookingValue,"booked")
+    
+
+      const finalSlots= findAvailableSlots(bookingValue)
+      return finalSlots;
+
+      
+
+          
+
+          
+      };
 
    
 export const BookingServices={
     createBookingIntoDB,
     getAllBookingFromDB,
     getUserBookingFromDB,
-    deleteBookingFromDB
+    deleteBookingFromDB,
+    checkBookingFromDB
 }
