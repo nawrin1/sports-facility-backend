@@ -7,6 +7,10 @@ Sports Facility Booking Platform
 
 This Sports Facility Booking platform project is built with Node JS, Express.js, Mongoose, Typescript. A user can signup and login using email and password. Admin can create facilities according to his choices. Moreover, admin also has the access to delete a facility, or update a facility. User can book those facilities. Besides user can view his booking list and can delete a booking also. Admin can view all the booking list. All the facilities can be retrieved by any user. Another additional feature is anyone can check the availibile slots of any facility of a partivular date if they want. If they dont use any desired date then a present default date will be considered. This project is basically focused on the backend side.
 
+## Live Link:
+```
+https://sportbackend-ten.vercel.app/
+```
 
 - [x] First of all clone the git repository of the project. Then use npm install to install necessary packages. If not all dependencies are installed you need to install these
 ```
