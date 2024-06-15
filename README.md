@@ -1,3 +1,5 @@
+##Project Name:Sports Facility Booking Platform
+
 ** First of all clone the git repository of the project. Then use npm install to install necessary packages. If not all dependencies are installed you need to install these
 ```
         "bcrypt": "^5.1.1",
