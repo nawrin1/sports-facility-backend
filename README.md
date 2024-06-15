@@ -20,7 +20,7 @@ This Sports Facility Booking platform project is built with Node JS, Express.js,
         "mongoose": "^8.4.1",
         "zod": "^3.23.8"
 ```
-** For installing eslint and prettier for the project use the following command:
+- [x] For installing eslint and prettier for the project use the following command:
 ```
 npm install eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin --save-dev
 
@@ -36,7 +36,7 @@ npm install --save-dev eslint-config-prettier
 
 
 
-** You may need to install all the devDependencies.Your dependencies need to look like this.
+- [x] You may need to install all the devDependencies.Your dependencies need to look like this.
 ```
     "@eslint/js": "^9.3.0",
     "@types/cors": "^2.8.17",
@@ -51,16 +51,16 @@ npm install --save-dev eslint-config-prettier
     "typescript": "^5.4.5",
     "typescript-eslint": "^7.10.0"
 ```
-** You have to create a .env file and attach the port and your mongodb uri  to connect with database,saltrounds for hashing password,declaring the environment,secret and expiration time of secret .
-** To compile you may use the command
+- [x] You have to create a .env file and attach the port and your mongodb uri  to connect with database,saltrounds for hashing password,declaring the environment,secret and expiration time of secret .
+- [x] To compile you may use the command
 ```
 npm run build
 ```
-** To start server you need to use
+- [x] To start server you need to use
 ```
 npm run start:dev
 ```
-** You may use these command using npm run 'your desired command' to get your desired functionality.These are all available in package.json file
+- [x] You may use these command using npm run 'your desired command' to get your desired functionality.These are all available in package.json file
 ```
  "start:prod": "node ./dist/server.js",
     "start:dev": " ts-node-dev --respawn --transpile-only src/server.ts",
