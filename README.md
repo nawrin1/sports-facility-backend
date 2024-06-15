@@ -28,7 +28,7 @@ npm install --save-dev eslint-config-prettier
 
 ** You may need to install all the devDependencies.Your dependencies need to look like this.
 ```
-"@eslint/js": "^9.3.0",
+    "@eslint/js": "^9.3.0",
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
     "@types/node": "^20.12.12",
@@ -41,7 +41,7 @@ npm install --save-dev eslint-config-prettier
     "typescript": "^5.4.5",
     "typescript-eslint": "^7.10.0"
 ```
-** You have to create a .env file and attach the port and your mongodb uri to connect with database
+** You have to create a .env file and attach the port and your mongodb uri  to connect with database,saltrounds for hashing password,declaring the environment,secret and expiration time of secret .
 ** To compile you may use the command
 ```
 npm run build
