@@ -156,7 +156,7 @@ const checkBookingFromDB = async (value: string|undefined) => {
         date: value
         
       }).select('startTime endTime -_id');
-      console.log(bookingValue,"booked")
+      // console.log(bookingValue,"booked")
     
 
       const finalSlots= findAvailableSlots(bookingValue)
