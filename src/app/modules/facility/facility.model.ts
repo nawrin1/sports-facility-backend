@@ -46,6 +46,12 @@ const facilitySchema = new Schema<TFacility,FacilityModel>(
     
     return (await Facility.findById(id));
   };
+  facilitySchema.statics.isFacilityExistsForDeleteTrue = async function (id) {
+    
+    return (await Facility.findById(id));
+  };
+
+
 
 
 

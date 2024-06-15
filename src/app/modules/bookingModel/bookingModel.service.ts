@@ -17,6 +17,12 @@ const  createBookingIntoDB = async (userData:JwtPayload,payload: TBooking) => {
         throw new AppError(httpStatus.BAD_REQUEST,'Facility does not exists!');
       }
 
+      const facilityValueDeleted = await Facility.isFacilityExistsForDeleteTrue(payload.facility);
+  if (facilityValueDeleted.isDeleted==true) {
+    throw new AppError(httpStatus.BAD_REQUEST, 'Facility has been deleted and does not exist. You cannot book this!');
+  }
+    
+
     const userId=await User.findOne({email:userData.user_email})
     let userIdString=""
     if (userId) {
@@ -26,7 +32,7 @@ const  createBookingIntoDB = async (userData:JwtPayload,payload: TBooking) => {
     
     }
     else{
-        throw new AppError(httpStatus.BAD_REQUEST,"User does not Exist")
+        throw new AppError(httpStatus.BAD_REQUEST,"No Data Found")
     }
     const payValue=facilityValue.pricePerHour
     const start=payload.startTime
@@ -107,6 +113,9 @@ const getUserBookingFromDB = async (payload:JwtPayload) => {
             select: '-createdAt -updatedAt -__v'
           })
           .select('-createdAt -updatedAt -__v -password');
+        if(result.length==0){
+          throw new AppError(httpStatus.NOT_FOUND,"No Data Found")
+        }
 
         //   console.log(result,"resss")
         return result;
@@ -151,6 +160,10 @@ const checkBookingFromDB = async (value: string|undefined) => {
     
 
       const finalSlots= findAvailableSlots(bookingValue)
+      if (finalSlots.length==0){
+        throw new AppError(httpStatus.NOT_FOUND,"No Slots Available")
+
+      }
       return finalSlots;
 
       

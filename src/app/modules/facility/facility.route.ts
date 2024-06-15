@@ -3,7 +3,7 @@ import express from 'express';
 
 import validateRequest from '../../middlewares/validateRequest';
 
-import { facilityValidationSchema } from './facility.validation';
+import { facilityUpdateValidationSchema, facilityValidationSchema } from './facility.validation';
 import auth from '../../middlewares/auth';
 import { FacilityControllers } from './facility.controller';
 
@@ -21,7 +21,7 @@ router.put(
     '/:id',
     auth(USER_ROLE.admin),
     
-    validateRequest(facilityValidationSchema),
+    validateRequest(facilityUpdateValidationSchema),
     FacilityControllers.updateFacility,
   );
 router.delete(

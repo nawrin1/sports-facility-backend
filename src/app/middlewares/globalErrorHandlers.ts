@@ -79,6 +79,16 @@ const globalErrorHandler:ErrorRequestHandler = (
     
       });
   }
+  else if (err.message=="No Data Found"){
+    return res.status(statusCode).json({
+        success: false,
+        statusCode:statusCode,
+        message,
+        data:[]
+        
+    
+      });
+  }
 
   else{
     return res.status(statusCode).json({
