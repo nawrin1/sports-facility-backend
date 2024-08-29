@@ -5,6 +5,7 @@ import { User } from "./user.model";
 import { TLoginUser } from "./user.login.interface";
 import { createToken } from "./user.auth.utils";
 import config from "../../config";
+import { JwtPayload } from "jsonwebtoken";
 
 const createUserIntoDB = async (payload: TUser) => {
 
@@ -19,6 +20,16 @@ const createUserIntoDB = async (payload: TUser) => {
     
     
     return final;
+  };
+const singleUserFromDB = async (payload:JwtPayload) => {
+
+
+
+    const result = await User.findOne({email:payload.user_email})
+    
+    
+    
+    return result;
   };
 
   const loginUser = async (payload: TLoginUser) => {
@@ -57,7 +68,8 @@ const createUserIntoDB = async (payload: TUser) => {
 
   export const UserServices = {
     createUserIntoDB,
-    loginUser
+    loginUser,
+    singleUserFromDB
     
   };
 

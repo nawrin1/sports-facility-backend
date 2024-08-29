@@ -20,6 +20,7 @@ const globalErrorHandler:ErrorRequestHandler = (
   res,
   next,
 ) => {
+  // console.log(err.message)
   let statusCode = err.statusCode||500;
   let message = err.message || 'Something went wrong!';
   let  errorMessages: TErrorMessages = [

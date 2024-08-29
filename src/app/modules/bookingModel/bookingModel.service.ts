@@ -94,6 +94,7 @@ const getAllBookingFromDB = async () => {
         return result;
 };
 
+
 const getUserBookingFromDB = async (payload:JwtPayload) => {
     // console.log(payload,"userrrr")
     const userId=await User.findOne({email:payload.user_email})
@@ -116,6 +117,26 @@ const getUserBookingFromDB = async (payload:JwtPayload) => {
         if(result.length==0){
           throw new AppError(httpStatus.NOT_FOUND,"No Data Found")
         }
+
+        //   console.log(result,"resss")
+        return result;
+};
+const getSingleBookingFromDB = async (payload:string) => {
+    
+
+
+
+
+        const result = await Booking.findById(payload)
+          
+          .populate({
+            path: 'facility',
+            select: '-createdAt -updatedAt -__v'
+          })
+          .select('-createdAt -updatedAt -__v -password');
+        // if(result.length==0){
+        //   throw new AppError(httpStatus.NOT_FOUND,"No Data Found")
+        // }
 
         //   console.log(result,"resss")
         return result;
@@ -179,5 +200,6 @@ export const BookingServices={
     getAllBookingFromDB,
     getUserBookingFromDB,
     deleteBookingFromDB,
-    checkBookingFromDB
+    checkBookingFromDB,
+    getSingleBookingFromDB
 }

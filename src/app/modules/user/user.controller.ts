@@ -17,8 +17,24 @@ const createUser = catchAsync(async (req, res) => {
       data: result,
     });
   });
+const singleUser = catchAsync(async (req, res) => {
+  console.log("in single user")
+    
+  
+  
+    const result = await UserServices.singleUserFromDB(req.user);
+  
+    sendResponse(res, {
+      
+      success: true,
+      statusCode: httpStatus.OK,
+      message: 'User retrived successfully',
+      data: result,
+    });
+  });
 
   const loginUser = catchAsync(async (req, res) => {
+    console.log("login")
     const result = await UserServices.loginUser(req.body);
     const {accessToken,user1}=result
 
@@ -35,6 +51,7 @@ const createUser = catchAsync(async (req, res) => {
 
   export const UserControllers = {
     createUser,
-    loginUser
+    loginUser,
+    singleUser
 
   };

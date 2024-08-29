@@ -35,6 +35,8 @@ const createBooking = catchAsync(async (req, res) => {
 );
   const getUserBooking = catchAsync(async (req, res) => {
 
+    console.log(req.user, "from userbooking")
+
     const result = await BookingServices.getUserBookingFromDB(req.user)
 
 
@@ -49,6 +51,7 @@ const createBooking = catchAsync(async (req, res) => {
 
 const deleteBooking = catchAsync(async (req, res) => {
     const { id } = req.params;
+    console.log(req.params)
     const result = await BookingServices.deleteBookingFromDB(id);
   
     sendResponse(res, {
@@ -58,6 +61,21 @@ const deleteBooking = catchAsync(async (req, res) => {
       data: result,
     });
   });
+const singleBooking = catchAsync(async (req, res) => {
+    const { id } = req.params;
+    console.log(req.params)
+    const result = await BookingServices.getSingleBookingFromDB(id);
+  
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'Single Booking Fetched successfully',
+      data: result,
+    });
+  });
+
+
+
 const checkBooking = catchAsync(async (req, res) => {
     const date=req.query?.date as string
     const result = await BookingServices.checkBookingFromDB(date);
@@ -78,5 +96,6 @@ export const BookingControllers={
     getAllBooking,
     getUserBooking,
     deleteBooking,
-    checkBooking
+    checkBooking,
+    singleBooking
 }
