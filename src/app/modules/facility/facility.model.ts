@@ -26,6 +26,10 @@ const facilitySchema = new Schema<TFacility,FacilityModel>(
         type:String,
         required:true
       },
+      image:{
+        type:String,
+        required:true
+      },
 
       
       isDeleted: {

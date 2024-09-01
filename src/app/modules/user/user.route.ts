@@ -16,6 +16,15 @@ router.post(
     UserControllers.createUser,
   );
 
+  
+router.post(
+    '/createadmin',
+    auth(USER_ROLE.admin),
+    
+    validateRequest(userValidationSchema),
+    UserControllers.createAdmin,
+  );
+
 
 
   
@@ -23,6 +32,12 @@ router.post(
     '/login',
     validateRequest(LoginValidation.UserLoginValidationSchema),
     UserControllers.loginUser,
+  );
+  
+  router.post(
+    '/create-payment-intent',
+    
+    UserControllers.paymentIntent,
   );
   
   router.get(

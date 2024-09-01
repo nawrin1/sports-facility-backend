@@ -9,6 +9,11 @@ import { hasBookingTimeConflict } from "./bookingTimeConflict";
 import { parseISO, isValid } from 'date-fns';
 import { findAvailableSlots } from "./bookingAvailable";
 
+const isValidTimeFormat = (time: string): boolean => {
+  // Basic regex to check if time is in HH:MM format
+  return /^([01]\d|2[0-3]):([0-5]\d)$/.test(time);
+};
+
 const  createBookingIntoDB = async (userData:JwtPayload,payload: TBooking) => {
     // console.log(payload,"from book")
     const newBook:Record<string,any>={}
@@ -21,6 +26,7 @@ const  createBookingIntoDB = async (userData:JwtPayload,payload: TBooking) => {
   if (facilityValueDeleted.isDeleted==true) {
     throw new AppError(httpStatus.BAD_REQUEST, 'Facility has been deleted and does not exist. You cannot book this!');
   }
+
     
 
     const userId=await User.findOne({email:userData.user_email})
@@ -34,6 +40,12 @@ const  createBookingIntoDB = async (userData:JwtPayload,payload: TBooking) => {
     else{
         throw new AppError(httpStatus.BAD_REQUEST,"No Data Found")
     }
+
+    if (!isValidTimeFormat(payload.startTime) || !isValidTimeFormat(payload.endTime)) {
+      throw new AppError(httpStatus.BAD_REQUEST, 'Invalid time format. Please use HH:MM format.');
+    }
+
+
     const payValue=facilityValue.pricePerHour
     const start=payload.startTime
     const end=payload.endTime
@@ -160,7 +172,7 @@ const deleteBookingFromDB = async (id: string) => {
 
           return deletedBooking
       };
-const checkBookingFromDB = async (value: string|undefined) => {
+const checkBookingFromDB = async (value: string|undefined,facility:string) => {
     let date;
     if (value) {
         date = parseISO(value);
@@ -172,12 +184,15 @@ const checkBookingFromDB = async (value: string|undefined) => {
         date = new Date();
       }
 
-    //   console.log(date,"from check")
+      console.log(value,"from check")
       const bookingValue = await Booking.find({
-        date: value
+        date: value,
+        facility:facility
         
       }).select('startTime endTime -_id');
-      // console.log(bookingValue,"booked")
+      console.log(bookingValue,"booked")
+
+      
     
 
       const finalSlots= findAvailableSlots(bookingValue)

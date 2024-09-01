@@ -37,6 +37,15 @@ router.delete(
     
    
     BookingControllers.deleteBooking,
+    
+  );
+
+  router.get(
+    '/check-availability',
+ 
+    
+   
+    BookingControllers.checkBooking,
   );
 router.get(
     '/:id',

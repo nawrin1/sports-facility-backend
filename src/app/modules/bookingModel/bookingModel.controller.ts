@@ -77,8 +77,11 @@ const singleBooking = catchAsync(async (req, res) => {
 
 
 const checkBooking = catchAsync(async (req, res) => {
+  console.log(req.query)
     const date=req.query?.date as string
-    const result = await BookingServices.checkBookingFromDB(date);
+
+    console.log(date)
+    const result = await BookingServices.checkBookingFromDB(date,req.query?.facility as string);
     const responseObject: any = {
         success: true,
         statusCode: httpStatus.OK,

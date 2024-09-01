@@ -17,6 +17,20 @@ const createUser = catchAsync(async (req, res) => {
       data: result,
     });
   });
+const createAdmin = catchAsync(async (req, res) => {
+    
+  
+  
+    const result = await UserServices.createAdminIntoDB(req.body);
+  
+    sendResponse(res, {
+      
+      success: true,
+      statusCode: httpStatus.OK,
+      message: 'Admin created successfully',
+      data: result,
+    });
+  });
 const singleUser = catchAsync(async (req, res) => {
   console.log("in single user")
     
@@ -48,10 +62,29 @@ const singleUser = catchAsync(async (req, res) => {
   });
 
 
+  const paymentIntent = catchAsync(async (req, res) => {
+    console.log("intent")
+
+    const { price } = req.body;
+    const result = await UserServices.paymentIntentService(price);
+    
+
+
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'Client secret generated successfully!',
+      data:result
+  });
+})
+
+
 
   export const UserControllers = {
     createUser,
     loginUser,
-    singleUser
+    singleUser,
+    createAdmin,
+    paymentIntent
 
   };

@@ -9,6 +9,7 @@ export const facilityValidationSchema = z.object({
         description: z.string().trim(),
         pricePerHour: z.number(),
         location: z.string().trim(),
+        image: z.string().trim(),
        
       })
   });
@@ -19,6 +20,7 @@ export const facilityUpdateValidationSchema = z.object({
         description: z.string().trim().optional(),
         pricePerHour: z.number().optional(),
         location: z.string().trim().optional(),
+        image: z.string().trim().optional(),
        
       })
   });

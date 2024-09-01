@@ -35,6 +35,11 @@ router.get(
 
     FacilityControllers.getAllFacility,
   );
+router.get(
+    '/:name',
+
+    FacilityControllers.getSingleFacility,
+  );
 
 
 

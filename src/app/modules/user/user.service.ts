@@ -6,13 +6,30 @@ import { TLoginUser } from "./user.login.interface";
 import { createToken } from "./user.auth.utils";
 import config from "../../config";
 import { JwtPayload } from "jsonwebtoken";
+import Stripe from "stripe";
+
+const stripe = new Stripe(config.secret as string);
 
 const createUserIntoDB = async (payload: TUser) => {
 
     
-//   if (await User.isUserExists(payload.email)) {
-//     throw new AppError(httpStatus.BAD_REQUEST,'User already exists!');
-//   }
+  // if (await User.isUserExists(payload.email)) {
+  //   throw new AppError(httpStatus.BAD_REQUEST,'User already exists!');
+  // }
+
+
+    const result = await User.create(payload);
+    const final = await User.findById(result._id).select('-password -createdAt -updatedAt -__v');
+    
+    
+    return final;
+  };
+const createAdminIntoDB = async (payload: TUser) => {
+
+    
+  // if (await User.isUserExists(payload.email)) {
+  //   throw new AppError(httpStatus.BAD_REQUEST,'User with same email already exists!');
+  // }
 
 
     const result = await User.create(payload);
@@ -66,10 +83,29 @@ const singleUserFromDB = async (payload:JwtPayload) => {
   };
 
 
+  const paymentIntentService = async (price :number) => {
+    // const amount = parseInt(price * 100);
+    const amount = parseInt((price * 100).toString());
+    console.log(amount, 'amount inside the intent')
+  
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: amount,
+      currency: 'usd',
+      payment_method_types: ['card']
+    });
+  
+    return({
+      clientSecret: paymentIntent.client_secret
+    })
+
+  };
+
   export const UserServices = {
     createUserIntoDB,
     loginUser,
-    singleUserFromDB
+    singleUserFromDB,
+    createAdminIntoDB,
+    paymentIntentService
     
   };
 
