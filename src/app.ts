@@ -12,7 +12,8 @@ const app: Application = express()
 app.use(express.json());
 // app.use(cors({ origin: ['http://localhost:5174'], credentials: true }));
 app.use(cors({
-  origin: 'http://localhost:5173', 
+  // origin: 'http://localhost:5173', 
+  origin: 'https://sportfrontend-two.vercel.app', 
   credentials: true,
 }));
 
