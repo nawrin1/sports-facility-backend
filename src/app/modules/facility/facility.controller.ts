@@ -48,7 +48,7 @@ const createFacility= catchAsync(async (req, res) => {
 
   const getAllFacility = catchAsync(async (req, res) => {
     console.log(req.query)
-      const result = await FacilityServices.getAllFacilityFromDB(req.query)
+      const result = await FacilityServices.getAllFacilityFromDB(req.query as { page: string; size: string; })
 
   
       sendResponse(res, {
